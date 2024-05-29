@@ -1,4 +1,12 @@
 {
+    "name": "proyecto",
+    "version": "1.0.0",
+    "description": "",
+    "main": "consultas.js",
+    "scripts": {
+      "start": "consultas.js"
+  
+  },
   "dependencies": {
     "@redocly/cli": "^1.12.2",
     "chai": "^5.1.1",
