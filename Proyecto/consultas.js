@@ -24,7 +24,7 @@ const swaggerOptions = {
             {url: "http://localhost:3000"}
         ], 
     },
-    apis: [`${path.join(__dirname,"./Consultas.js")}`],
+    apis: [`${path.join(__dirname,"./consultas.js")}`],
     };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
@@ -42,7 +42,7 @@ app.use(express.json());
  * - name: Personajes
  *   description: Procesos de Alumnos
  * paths:
- *   /lista_personajes:
+ *   /lista:
  *     get:
  *       tags:     
  *       - Personajes
@@ -53,14 +53,14 @@ app.use(express.json());
  *           type: json
  */
 //Consulta
-app.get("/lista_personajes", async (req,res,next)=>{
+app.get("/lista", async (req,res,next)=>{
     sql ='SELECT * FROM personajes';
     if (typeof req.query.id !='undefined'){
     sql = sql + ` where id = "${req.query.id}"`;
     }
 
     try{
-    connection =await mysql.createConnection({ host: 'roundhouse.proxy.rlwy.net', user:'root', database: 'railway', password: 'BJeuxTjJuwfhXSaolTreiTJqpiREPhAl'});
+    connection =await mysql.createConnection({ host: 'roundhouse.proxy.rlwy.net', user:'root', database: 'railway', password: 'BJeuxTjJuwfhXSaolTreiTJqpiREPhAls'});
     var [rows,fields]=await connection.query(sql);
     connection.end();
     
