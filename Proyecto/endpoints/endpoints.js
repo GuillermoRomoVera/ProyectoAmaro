@@ -19,13 +19,33 @@ const connection = mysql.createConnection({
     password: PASSWORD
   });
 
+
   router.get('/', (req, res) => {
     res.json({"message":"Probando API"});
   }); 
-
-router.get("/lista", async (req,res,next)=>{
-    sql ='SELECT * FROM personajes';
-    if (typeof req.query.ID =='undefined'){
+/**
+ * @swagger
+ * /lista:
+ *   get:
+ *     tags:
+ *       - Registro de Personajes
+ *     summary: Lista de Personajes
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: ID del Personaje
+ *         schema:
+ *           type: string
+ *     remponses:
+ *       200:
+ *         description: Operacion exitosa
+ *       400:
+ *         description: No encontrado
+ *       500:
+ *         description: Error de conexion
+ */
+router.get("/lista", (req,res)=>{
+    if (typeof req.query.Id =='undefined'){
         connection.query(
             'SELECT * FROM personajes',
             function(err,result){
@@ -43,7 +63,7 @@ router.get("/lista", async (req,res,next)=>{
 });
 
 //Update
-router.put("/actualizar", async (req, res) => {
+router.put("/actualizar", (req, res) => {
     try {
         const {Id} = req.params;
         const {Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma }=req.body;
@@ -61,7 +81,7 @@ router.put("/actualizar", async (req, res) => {
 });
 
 //Añadir
-router.post("/agregar", async (req, res) => {
+router.post("/agregar", (req, res) => {
     try {
         const {Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma }=req.body;
         console.log(req.body);
@@ -78,7 +98,7 @@ router.post("/agregar", async (req, res) => {
 });
 
 //Borrar
-router.delete("/eliminar", async (req, res) =>{
+router.delete("/eliminar", (req, res) =>{
     try{
         const {Id}=req.params;
         connection.query(
