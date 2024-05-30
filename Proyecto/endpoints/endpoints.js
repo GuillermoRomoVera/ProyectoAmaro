@@ -5,7 +5,6 @@ require('dotenv').config({path: '../config.env'});
 
 const jwt = require('jsonwebtoken');
 
-console.log(process.env) // remove this after you've confirmed it is working
 const HOST = process.env.MYSQLHOST;
 const USER = process.env.MYSQLUSER;
 const DB = process.env.MYSQLDATABASE;
@@ -62,7 +61,7 @@ router.put("/actualizar", async (req, res) => {
 });
 
 //Añadir
-app.post("/agregar", async (req, res) => {
+router.post("/agregar", async (req, res) => {
     try {
         const {Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma }=req.body;
         console.log(req.body);
@@ -79,7 +78,7 @@ app.post("/agregar", async (req, res) => {
 });
 
 //Borrar
-app.delete("/eliminar", async (req, res) =>{
+router.delete("/eliminar", async (req, res) =>{
     try{
         const {ID}=req.params;
         connection.query(

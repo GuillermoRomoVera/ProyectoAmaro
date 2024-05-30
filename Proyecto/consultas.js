@@ -6,8 +6,8 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const { SwaggerTheme, SwaggerThemeNameEnum } = require('swagger-themes');
 const theme = new SwaggerTheme();
 require('dotenv').config({path: './config.env'});
-console.log(process.env);
 const router=require('./endpoints/endpoints.js')
+const PORT = process.env.PORTE;
 
 const options = {
     explorer: true,
