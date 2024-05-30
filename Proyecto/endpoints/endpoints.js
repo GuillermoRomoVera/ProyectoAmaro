@@ -3,8 +3,6 @@ const router = express.Router();
 const mysql = require('mysql2');
 require('dotenv').config({path: '../config.env'});
 
-const jwt = require('jsonwebtoken');
-
 const HOST = process.env.MYSQLHOST;
 const USER = process.env.MYSQLUSER;
 const DB = process.env.MYSQLDATABASE;

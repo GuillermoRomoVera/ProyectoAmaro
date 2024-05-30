@@ -7,7 +7,7 @@ const { SwaggerTheme, SwaggerThemeNameEnum } = require('swagger-themes');
 const theme = new SwaggerTheme();
 require('dotenv').config({path: './config.env'});
 const router=require('./endpoints/endpoints.js')
-const PORT = process.env.PORTE;
+const PORT = process.env.PORT;
 
 const options = {
     explorer: true,
