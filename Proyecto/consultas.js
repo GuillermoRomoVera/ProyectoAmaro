@@ -23,7 +23,7 @@ const swaggerOptions = {
             description: 'Api que realiza un registro simple de personajes para el juego de mesa de D&D'
     },
         servers:[
-            {url: "http://localhost:3000"}
+            {url: "http://localhost:3000"}, {url: "https://proyectoamaro-production.up.railway.app/"}
         ], 
     },
     apis: [`${path.join(__dirname,"./Consultas.js")}`],
