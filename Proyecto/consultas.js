@@ -24,7 +24,7 @@ const swaggerOptions = {
             {url: "http://localhost:3000"}
         ], 
     },
-    apis: [`${path.join(__dirname,"./consultas.js")}`],
+    apis: [`${path.join(__dirname,"./Consultas.js")}`],
     };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
@@ -33,13 +33,6 @@ app.use("/api-docs",swaggerUI.serve,swaggerUI.setup(swaggerDocs,options));
 app.use("/api-docs-json",(req,res)=>{
     res.json(swaggerDocs);
 })
-
-
-const HOST = process.env.MYSQLHOST;
-const USER = process.env.MYSQLUSER;
-const PASSWORD = process.env.MYSQL_ROOT_PASSWORD;
-const DATABASE = process.env.MYSQL_DATABASE;
-const PORTE = process.env.MYSQLPORT;
 
 app.use(express.json());
 
@@ -67,15 +60,7 @@ app.get("/lista", async (req,res,next)=>{
     }
 
     try{
-        connection = await mysql.createConnection({
-        host: HOST,
-        user: USER,
-        database: DATABASE,
-        password: PASSWORD,
-        connectTimeout: 10000 // 10 seconds
-      });
-      
-
+    connection =await mysql.createConnection({ host: 'roundhouse.proxy.rlwy.net', user:'root', database: 'railway', password: 'BJeuxTjJuwfhXSaolTreiTJqpiREPhAls'});
     var [rows,fields]=await connection.query(sql);
     connection.end();
     
@@ -108,7 +93,7 @@ app.put("/actualizar", async (req, res) => {
 app.post("/agregar", async (req, res) => {
     try {
         connection = await mysql.createConnection({ host: 'roundhouse.proxy.rlwy.net', user: 'root', database: 'railway', password: 'BJeuxTjJuwfhXSaolTreiTJqpiREPhAl' });
-        sql =`INSERT INTO personajes (Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma) VALUES ("${req.query.Nombre}","${req.query.Raza},"${req.query.Clase},"${req.query.Fuerza}","${req.query.Destreza}","${req.query.Constitucion}","${req.query.Inteligencia}","${req.query.Sabiduria}","${req.query.Carisma}")`;
+        sql =`INSERT INTO personajes (Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma) VALUES ("${req.query.Nombre}","${req.query.Raza}","${req.query.Clase}","${req.query.Fuerza}","${req.query.Destreza}","${req.query.Constitucion}","${req.query.Inteligencia}","${req.query.Sabiduria}","${req.query.Carisma}")`;
         var [rows,fields] = await connection.query(sql);
         await connection.end();
         res.status(201).json({ message: "Nuevo Personaje agregado correctamente" });
