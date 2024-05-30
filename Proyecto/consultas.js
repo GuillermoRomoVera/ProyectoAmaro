@@ -45,7 +45,7 @@ app.get("/lista", async (req, res, next) => {
     }
 
     try {
-        connection = await mysql.createConnection(process.env.MYSQL_URL);
+        connection = await mysql.createConnection(process.env.MYSQL_PRIVATE_URL);
         const [rows, fields] = await connection.query(sql);
         await connection.end();
 
@@ -59,7 +59,7 @@ app.get("/lista", async (req, res, next) => {
 app.put("/actualizar", async (req, res) => {
     let connection;
     try {
-        connection = await mysql.createConnection(process.env.MYSQL_URL);
+        connection = await mysql.createConnection(process.env.MYSQL_PRIVATE_URL);
         const sql = `UPDATE personajes SET id ="${req.body.idNuevo}" WHERE id = "${req.body.id}"`;
         const result = await connection.query(sql);
         await connection.end();
@@ -77,7 +77,7 @@ app.put("/actualizar", async (req, res) => {
 app.post("/agregar", async (req, res) => {
     let connection;
     try {
-        connection = await mysql.createConnection(process.env.MYSQL_URL);
+        connection = await mysql.createConnection(process.env.MYSQL_PRIVATE_URL);
         const sql = `INSERT INTO personajes (Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma) VALUES ("${req.body.Nombre}","${req.body.Raza}","${req.body.Clase}","${req.body.Fuerza}","${req.body.Destreza}","${req.body.Constitucion}","${req.body.Inteligencia}","${req.body.Sabiduria}","${req.body.Carisma}")`;
         const [rows, fields] = await connection.query(sql);
         await connection.end();
@@ -91,7 +91,7 @@ app.post("/agregar", async (req, res) => {
 app.delete("/eliminar", async (req, res) => {
     let connection;
     try {
-        connection = await mysql.createConnection(process.env.MYSQL_URL);
+        connection = await mysql.createConnection(process.env.MYSQL_PRIVATE_URL);
         const sql = `DELETE FROM personajes WHERE id = "${req.body.id}"`;
         const [rows, fields] = await connection.query(sql);
         await connection.end();
