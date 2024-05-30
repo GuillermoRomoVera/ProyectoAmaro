@@ -1,11 +1,11 @@
 {
-    "name": "proyecto",
-    "version": "1.0.0",
-    "description": "",
-    "main": "consultas.js",
-    "scripts": {
-        "start": "node consultas.js"
-    },
+  "name": "proyecto",
+  "version": "1.0.0",
+  "description": "Api que realiza un registro simple de personajes para el juego de mesa de D&D",
+  "main": "consultas.js",
+  "scripts": {
+    "start": "node consultas.js"
+  },
     "dependencies": {
         "@redocly/cli": "^1.12.2",
         "chai": "^5.1.1",

@@ -34,6 +34,13 @@ app.use("/api-docs-json", (req, res) => {
     res.json(swaggerDocs);
 });
 
+const PORT = process.env.PORT;
+const PORTE = process.env.MYSQLPORT;
+const HOST = process.env.MYSQLHOST;
+const USER = process.env.MYSQLUSER;
+const PASSWORD = process.env.MYSQL_ROOT_PASSWORD;
+const DATABASE = process.env.MYSQL_DATABASE;
+
 app.use(express.json());
 
 /**
@@ -43,7 +50,7 @@ app.use(express.json());
  *   description: Procesos de Alumnos
  * /lista:
  *   get:
- *     tags:     
+ *     tags:
  *       - Personajes
  *     description: Lista de alumnos
  *     responses:
@@ -64,10 +71,10 @@ app.get("/lista", async (req, res, next) => {
 
     try {
         const connection = await mysql.createConnection({
-            host: 'roundhouse.proxy.rlwy.net',
-            user: 'root',
-            database: 'railway',
-            password: 'BJeuxTjJuwfhXSaolTreiTJqpiREPhAl'
+            host: HOST,
+            user: USER,
+            database: DATABASE,
+            password: PASSWORD
         });
 
         const [rows, fields] = await connection.execute(sql, [req.query.id]);
@@ -148,6 +155,6 @@ app.delete("/eliminar", async (req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log("Servidor Express escuchando en puerto 3000");
+app.listen(PORTE, () => {
+    console.log("Servidor Express escuchando en puerto: "+PORTE);
 });
