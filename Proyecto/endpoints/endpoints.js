@@ -65,50 +65,71 @@ router.get("/lista", (req,res)=>{
 //Update
 router.put("/actualizar", (req, res) => {
     try {
-        const {Id} = req.params;
-        const {Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma }=req.body;
+        const { Id, Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma } = req.body;
         console.log(req.body);
         connection.query(
-            'UPDATE `personajes` set `Nombre` =?, `Raza`=?, `Clase`=?,`Fuerza`=?,`Destreza`=?,`Constitucion`=?,`Inteligencia`=?,`Sabiduria`=?,`Carisma`=?',
-            [Id, Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma],
-            function(err,results){
+            'UPDATE `personajes` SET `Nombre` = ?, `Raza` = ?, `Clase` = ?, `Fuerza` = ?, `Destreza` = ?, `Constitucion` = ?, `Inteligencia` = ?, `Sabiduria` = ?, `Carisma` = ? WHERE `Id` = ?',
+            [Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma, Id],
+            function (err, results) {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send("Error al actualizar el personaje");
+                    return;
+                }
                 console.log(results);
                 res.status(200).send("Personaje actualizado!");
-            })
-    } catch(err){
-        res.send(err.code+` / `+err.message);
+            }
+        );
+    } catch (err) {
+        res.status(500).send(err.code + ` / ` + err.message);
     }
 });
+
 
 //Añadir
 router.post("/agregar", (req, res) => {
     try {
-        const {Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma }=req.body;
+        const { Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma } = req.body;
         console.log(req.body);
         connection.query(
-        `INSERT INTO personajes (Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma) VALUES (?,?,?,?,?,?,?,?,?)`
-        [Id, Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma],
-        function(err,results){
-            console.log(results);
-        res.status(201).send("Nuevo Personaje agregado correctamente");
-        })
-    } catch(err){
-        res.send(err.code+` / `+err.message);
+            `INSERT INTO personajes (Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma],
+            function (err, results) {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send("Error al agregar el personaje");
+                    return;
+                }
+                console.log(results);
+                res.status(201).send("Nuevo Personaje agregado correctamente");
+            }
+        );
+    } catch (err) {
+        res.status(500).send(err.code + ` / ` + err.message);
     }
 });
 
+
 //Borrar
-router.delete("/eliminar", (req, res) =>{
-    try{
-        const {Id}=req.params;
+router.delete("/eliminar/:Id", (req, res) => {
+    try {
+        const { Id } = req.params;
         connection.query(
-        sql =`DELETE FROM personajes WHERE ID = ?`,[Id],
-        function(err,results){
-        console.log(results); 
-        res.status(201).send("Personaje eliminado con exito");
-        })
-    } catch(err){
-        res.send(err.code+` / `+err.message);
+            'DELETE FROM personajes WHERE Id = ?',
+            [Id],
+            function (err, results) {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send("Error al eliminar el personaje");
+                    return;
+                }
+                console.log(results);
+                res.status(200).send("Personaje eliminado con éxito");
+            }
+        );
+    } catch (err) {
+        res.status(500).send(err.code + ` / ` + err.message);
     }
-})
+});
+
 module.exports = router;
