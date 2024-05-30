@@ -45,11 +45,11 @@ router.get("/lista", (req,res)=>{
 //Update
 router.put("/actualizar", (req, res) => {
     try {
-        const { Id, Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma } = req.body;
+        const { ID, Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma } = req.body;
         console.log(req.body);
         connection.query(
-            'UPDATE `personajes` SET `Nombre` = ?, `Raza` = ?, `Clase` = ?, `Fuerza` = ?, `Destreza` = ?, `Constitucion` = ?, `Inteligencia` = ?, `Sabiduria` = ?, `Carisma` = ? WHERE `Id` = ?',
-            [Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma, Id],
+            'UPDATE `personajes` SET `Nombre` = ?, `Raza` = ?, `Clase` = ?, `Fuerza` = ?, `Destreza` = ?, `Constitucion` = ?, `Inteligencia` = ?, `Sabiduria` = ?, `Carisma` = ? WHERE `ID` = ?',
+            [Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma, ID],
             function (err, results) {
                 if (err) {
                     console.error(err);
@@ -66,13 +66,14 @@ router.put("/actualizar", (req, res) => {
 });
 
 
+
 //Añadir
 router.post("/agregar", (req, res) => {
     try {
         const { Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma } = req.body;
         console.log(req.body);
         connection.query(
-            `INSERT INTO personajes (Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO personajes (Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma) VALUES ("?", "?", "?", ?, ?, ?, ?, ?, ?)`,
             [Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma],
             function (err, results) {
                 if (err) {
@@ -93,10 +94,10 @@ router.post("/agregar", (req, res) => {
 //Borrar
 router.delete("/eliminar", (req, res) => {
     try {
-        const { Id } = req.params;
+        const { ID } = req.body;
         connection.query(
-            'DELETE FROM personajes WHERE Id = ?',
-            [Id],
+            'DELETE FROM personajes WHERE ID = ?',
+            [ID],
             function (err, results) {
                 if (err) {
                     console.error(err);

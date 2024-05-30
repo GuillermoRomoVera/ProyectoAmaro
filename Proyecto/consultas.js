@@ -26,7 +26,7 @@ const swaggerOptions = {
             {url: "http://localhost:3000"}, {url: "https://proyectoamaro-production.up.railway.app/"}
         ], 
     },
-    apis: [`${path.join(__dirname,"./consultas.js")}`],
+    apis: [`${path.join(__dirname,"./endpoints.js")}`],
     };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
