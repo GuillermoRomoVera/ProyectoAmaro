@@ -111,7 +111,7 @@ router.post("/agregar", (req, res) => {
 
 
 //Borrar
-router.delete("/eliminar/:Id", (req, res) => {
+router.delete("/eliminar", (req, res) => {
     try {
         const { Id } = req.params;
         connection.query(
@@ -131,5 +131,148 @@ router.delete("/eliminar/:Id", (req, res) => {
         res.status(500).send(err.code + ` / ` + err.message);
     }
 });
+
+ /**
+ * @swagger
+ * info:
+ *   description: "API para la gestión de personajes de Dungeons & Dragons"
+ *   version: "1.0.0"
+ *   title: "DnD Personajes API"
+ * host: "localhost:3000"
+ * basePath: "/"
+ * tags:
+ *   - name: "personajes"
+ *     description: "Operaciones CRUD para personajes"
+ * 
+ * schemes:
+ *   - "http"
+ *
+ * paths:
+ *   /lista:
+ *     get:
+ *       tags:
+ *         - "personajes"
+ *       summary: "Obtener lista de personajes"
+ *       description: "Obtiene una lista de todos los personajes o un personaje específico por ID"
+ *       parameters:
+ *         - name: "Id"
+ *           in: "query"
+ *           description: "ID del personaje"
+ *           required: false
+ *           type: "integer"
+ *       responses:
+ *         200:
+ *           description: "Lista de personajes obtenida con éxito"
+ *           schema:
+ *             type: "array"
+ *             items:
+ *               $ref: "#/schemas/Personaje"
+ *         404:
+ *           description: "Personaje no encontrado"
+ *         500:
+ *           description: "Error al obtener la lista de personajes"
+ *
+ *   /actualizar:
+ *     put:
+ *       tags:
+ *         - "personajes"
+ *       summary: "Actualizar un personaje"
+ *       description: "Actualiza los detalles de un personaje existente"
+ *       parameters:
+ *         - in: "body"
+ *          name: "body"
+ *          description: "Detalles del personaje a actualizar"
+ *          required: true
+ *          schema:
+ *            $ref: "#/schemas/Personaje"
+ *     responses:
+ *        200:
+ *          description: "Personaje actualizado con éxito"
+ *        500:
+ *          description: "Error al actualizar el personaje"
+ *
+ *  /agregar:
+ *    post:
+ *      tags:
+ *        - "personajes"
+ *      summary: "Agregar un nuevo personaje"
+ *      description: "Agrega un nuevo personaje a la base de datos"
+ *      parameters:
+ *        - in: "body"
+ *          name: "body"
+ *          description: "Detalles del nuevo personaje"
+ *          required: true
+ *          schema:
+ *            $ref: "#/schemas/Personaje"
+ *      responses:
+ *        201:
+ *          description: "Nuevo personaje agregado correctamente"
+ *        500:
+ *          description: "Error al agregar el personaje"
+ *
+ *  /eliminar/{Id}:
+ *    delete:
+ *      tags:
+ *        - "personajes"
+ *      summary: "Eliminar un personaje"
+ *      description: "Elimina un personaje existente de la base de datos"
+ *      parameters:
+ *        - name: "Id"
+ *          in: "path"
+ *          description: "ID del personaje a eliminar"
+ *          required: true
+ *          type: "integer"
+ *      responses:
+ *        200:
+ *          description: "Personaje eliminado con éxito"
+ *        500:
+ *          description: "Error al eliminar el personaje"
+ *
+ *schemas:
+ *   Personaje:
+ *    type: "object"
+ *    required:
+ *      - Nombre
+ *      - Raza
+ *      - Clase
+ *      - Fuerza
+ *      - Destreza
+ *      - Constitucion
+ *      - Inteligencia
+ *      - Sabiduria
+ *      - Carisma
+ *    properties:
+ *      Id:
+ *        type: "integer"
+ *        description: "ID autoincremental del personaje"
+ *      Nombre:
+ *        type: "string"
+ *        description: "Nombre del personaje"
+ *      Raza:
+ *        type: "string"
+ *        description: "Raza del personaje"
+ *      Clase:
+ *        type: "string"
+ *        description: "Clase del personaje"
+ *      Fuerza:
+ *        type: "integer"
+ *        description: "Fuerza del personaje"
+ *      Destreza:
+ *        type: "integer"
+ *        description: "Destreza del personaje"
+ *      Constitucion:
+ *        type: "integer"
+ *        description: "Constitución del personaje"
+ *      Inteligencia:
+ *        type: "integer"
+ *        description: "Inteligencia del personaje"
+ *      Sabiduria:
+ *        type: "integer"
+ *        description: "Sabiduría del personaje"
+ *      Carisma:
+ *        type: "integer"
+ *        description: "Carisma del personaje"
+ */
+
 
 module.exports = router;
