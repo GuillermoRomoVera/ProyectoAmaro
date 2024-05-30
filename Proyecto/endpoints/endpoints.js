@@ -48,7 +48,7 @@ router.get("/lista", (req,res)=>{
     if (typeof req.query.Id =='undefined'){
         connection.query(
             'SELECT * FROM personajes',
-            function(err,result){
+            function(err,results){
                 (results.length == 0) ? res.status(404).send("not found") : console.log(results); res.send(results)
             });
     }
