@@ -19,22 +19,24 @@ const connection = mysql.createConnection({
     password: PASSWORD
   });
 
+  router.get('/', (req, res) => {
+    res.json({"message":"Probando API"});
+  }); 
 
 router.get("/lista", async (req,res,next)=>{
     sql ='SELECT * FROM personajes';
     if (typeof req.query.ID =='undefined'){
         connection.query(
-            sql,
+            'SELECT * FROM personajes',
             function(err,result){
-                (rows.length > 0) ? res.send(rows) : res.status(404).json({Eror: "Datos no encontrados"});
-            }
-        )
+                (results.length == 0) ? res.status(404).send("not found") : console.log(results); res.send(results)
+            });
     }
     else{    
     connection.query(
-        sql + 'WHERE ID =' + req.query.ID ,
-        function(err,result){
-            (rows.length > 0) ? res.send(rows) : res.status(404).json({Eror: "Datos no encontrados"});
+        'SELECT * FROM personajes WHERE ID =' + req.query.Id ,
+        function(err,results){
+            (results.length == 0) ? res.status(404).send("not found") : console.log(results); res.send(results);
             }
         )
     }
@@ -43,12 +45,12 @@ router.get("/lista", async (req,res,next)=>{
 //Update
 router.put("/actualizar", async (req, res) => {
     try {
-        const {ID} = req.params;
+        const {Id} = req.params;
         const {Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma }=req.body;
         console.log(req.body);
         connection.query(
             'UPDATE `personajes` set `Nombre` =?, `Raza`=?, `Clase`=?,`Fuerza`=?,`Destreza`=?,`Constitucion`=?,`Inteligencia`=?,`Sabiduria`=?,`Carisma`=?',
-            [ID, Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma],
+            [Id, Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma],
             function(err,results){
                 console.log(results);
                 res.status(200).send("Personaje actualizado!");
@@ -65,7 +67,7 @@ router.post("/agregar", async (req, res) => {
         console.log(req.body);
         connection.query(
         `INSERT INTO personajes (Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma) VALUES (?,?,?,?,?,?,?,?,?)`
-        [ID, Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma],
+        [Id, Nombre, Raza, Clase, Fuerza, Destreza, Constitucion, Inteligencia, Sabiduria, Carisma],
         function(err,results){
             console.log(results);
         res.status(201).send("Nuevo Personaje agregado correctamente");
@@ -78,9 +80,9 @@ router.post("/agregar", async (req, res) => {
 //Borrar
 router.delete("/eliminar", async (req, res) =>{
     try{
-        const {ID}=req.params;
+        const {Id}=req.params;
         connection.query(
-        sql =`DELETE FROM personajes WHERE ID = ?`,[ID],
+        sql =`DELETE FROM personajes WHERE ID = ?`,[Id],
         function(err,results){
         console.log(results); 
         res.status(201).send("Personaje eliminado con exito");
