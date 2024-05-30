@@ -34,6 +34,13 @@ app.use("/api-docs-json",(req,res)=>{
     res.json(swaggerDocs);
 })
 
+
+const HOST = process.env.MYSQLHOST;
+const USER = process.env.MYSQLUSER;
+const PASSWORD = process.env.MYSQL_ROOT_PASSWORD;
+const DATABASE = process.env.MYSQL_DATABASE;
+const PORTE = process.env.MYSQLPORT;
+
 app.use(express.json());
 
 /**
@@ -60,7 +67,15 @@ app.get("/lista", async (req,res,next)=>{
     }
 
     try{
-    connection =await mysql.createConnection({ host: 'roundhouse.proxy.rlwy.net', user:'root', database: 'railway', password: 'BJeuxTjJuwfhXSaolTreiTJqpiREPhAls'});
+        connection = await mysql.createConnection({
+        host: MYSQLHOST,
+        user: MYSQLUSER,
+        database: MYSQL_DATABASE,
+        password: MYSQL_ROOT_PASSWORD,
+        connectTimeout: 10000 // 10 seconds
+      });
+      
+
     var [rows,fields]=await connection.query(sql);
     connection.end();
     
