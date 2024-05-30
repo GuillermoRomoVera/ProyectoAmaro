@@ -68,10 +68,10 @@ app.get("/lista", async (req,res,next)=>{
 
     try{
         connection = await mysql.createConnection({
-        host: MYSQLHOST,
-        user: MYSQLUSER,
-        database: MYSQL_DATABASE,
-        password: MYSQL_ROOT_PASSWORD,
+        host: HOST,
+        user: USER,
+        database: DATABASE,
+        password: PASSWORD,
         connectTimeout: 10000 // 10 seconds
       });
       
