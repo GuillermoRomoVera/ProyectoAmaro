@@ -182,7 +182,7 @@ router.delete("/eliminar", (req, res) => {
 *          description: "Nuevo personaje agregado correctamente"
 *        '500':
 *          description: "Error al agregar el personaje"
-*  /eliminar/{Id}:
+*  /eliminar:
 *    delete:
 *      summary: "Eliminar un personaje"
 *      description: "Elimina un personaje existente de la base de datos"
